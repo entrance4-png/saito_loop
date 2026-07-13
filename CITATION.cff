@@ -9,8 +9,8 @@ authors:
   - family-names: Saito
     given-names: Hiroki
     affiliation: "Nippon Medical School; Onda-daini Hospital"
-    orcid: "https://orcid.org/0000-0000-0000-0000"   # <- 自分のORCIDに置換
-repository-code: "https://github.com/<user>/saito_loop"
+    orcid: "https://orcid.org/0000-0002-4964-8559"  
+repository-code: "https://github.com/entrance4-png/saito_loop"
 abstract: >-
   Reproduces every result and figure of "The Saito Loop: A Deductive Theory of
   Hierarchical Recovery in Catatonia": the prerequisite dependency graph, its
