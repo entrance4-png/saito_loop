@@ -1,0 +1,21 @@
+{
+  "title": "saito_loop: a Python package for the Saito Loop",
+  "description": "Reproduces every result and figure of 'The Saito Loop: A Deductive Theory of Hierarchical Recovery in Catatonia'.",
+  "license": "MIT",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Saito, Hiroki",
+      "affiliation": "Nippon Medical School; Onda-daini Hospital",
+      "orcid": "0000-0000-0000-0000"
+    }
+  ],
+  "keywords": ["catatonia", "computational psychiatry", "active inference", "identifiability"],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://doi.org/10.1101/XXXX.XX.XX.XXXXXXXX",
+      "scheme": "doi"
+    }
+  ]
+}
