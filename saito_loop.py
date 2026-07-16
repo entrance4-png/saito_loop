@@ -1002,11 +1002,14 @@ def figure4_competing(grid_res, indep_admitted, common_res, saito_res, path):
 # 8. DRIVER — run everything and print a verification report
 # =============================================================================
 def theorem1_irreducibility():
-    """Formal minimality check for Theorem 1. The longitudinal record resolves
-    five DISTINCT milestone latencies (including the two dissociations beta<pi_m
-    and pi_vfast<pi_vslow). Any decomposition below five coordinates must, by
-    pigeonhole, merge two distinct-latency milestones or drop one, and so lose a
-    separation the record shows. Here every reduction below five is checked."""
+    """Milestone-side SELECTION check for Theorem 1. The COUNT of five is derived
+    structurally from the free-energy factorization (Methods, Lemma 1), not here.
+    This routine only verifies the selection among theory-admissible cardinalities:
+    the record resolves five distinct milestone latencies (incl. the dissociations
+    beta<pi_m and pi_vfast<pi_vslow); any coarser decomposition merges two
+    distinct-latency milestones (losing a separation) and any finer one adds a
+    precision with no distinct milestone. Non-circular: the alternatives (four, six)
+    are themselves active-inference-admissible; the observed dissociations adjudicate."""
     import itertools
     T, S = simulate({q: 1.0 for q in QUANTITIES},
                     {q: 0.02 for q in QUANTITIES}, t_max=80.0, dt=0.02)
@@ -1092,7 +1095,7 @@ def main(fig_dir="."):
     print("  two dissociations separated          :", irr["two_dissociations_separated"])
     print("  refinement beyond five unidentifiable:",
           irr["max_identifiable_coordinates"] == len(QUANTITIES))
-    print("  => exactly five (both bounds)        :", irr["exactly_five"])
+    print("  => milestone-side selection of five  :", irr["exactly_five"])
     report["theorem1_irreducibility"] = irr
 
     # Stage 1 - consistency check: the SAME chain, supplied to the zeroing probe
