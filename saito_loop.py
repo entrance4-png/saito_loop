@@ -34,14 +34,21 @@ from __future__ import annotations
 #
 #     pi_s -> beta -> pi_m -> pi_vfast -> pi_vslow
 #
-# are supplied to the code as the support of the generative gating (see
-# EXPECTED_EDGES_FOR_AUDIT / the MODEL section below). Stage 1 then confirms that this
-# encoded structure reproduces the same dependency graph and the same unique
-# topological order that Theorem 2 derives ANALYTICALLY. What forces the edges is
-# the likelihood-flattening argument of Theorem 2 -- which capacity's data go
-# silent without which -- an analytical result, NOT this simulation. The code
-# therefore demonstrates that the derived wiring is self-consistent and yields a
-# single admissible order; it does NOT discover the graph by search. Accordingly
+# are NOT supplied to the code to construct the likelihood or to derive the graph.
+# The hand-written list EXPECTED_EDGES_FOR_AUDIT is retained SOLELY as a named audit
+# target; the edges themselves are reconstructed in Stage 0
+# (derive_edges_from_generative_model) from the joint Poisson likelihood via the
+# mean-Jacobian zero-column test on channel_means(), and the audit only checks that
+# the reconstructed edges match the named target. What forces the edges is the
+# likelihood-flattening argument of Theorem 2 -- which capacity's data go silent
+# without which -- an analytical result, NOT this simulation. Note, however, that the
+# likelihood architecture in channel_means() itself INSTANTIATES the modelling
+# commitments M1-M3: those functional forms are modelling commitments, not
+# mathematical necessities uniquely forced by active inference in general, and the
+# uniqueness of the graph is conditional on the class M* of observation models that
+# share the same structural zero set (see Methods "Scope" and Supplementary Note 7).
+# The code therefore demonstrates that the derived wiring is self-consistent and
+# yields a single admissible order; it does NOT discover the graph by search. Accordingly
 # the deductive conclusions are independent of simulation length, random seed,
 # grid resolution and context number. See Methods (Theorem 2) and the manuscript
 # subsection "Role of numerical analyses".
@@ -62,7 +69,7 @@ from __future__ import annotations
 # ============================ PART A ============================
 """saito_loop_all.py
 ================================================================================
-The Saito Loop — a deductive theory of hierarchical recovery in catatonia.
+The Saito Loop - a deductive theory of hierarchical recovery in catatonia.
 Single-file reproduction of the entire analysis.
 
 Run:
@@ -157,7 +164,7 @@ def _finish(fig, path):
 
 
 # =============================================================================
-# 1. MODEL — the generative architecture
+# 1. MODEL - the generative architecture
 # =============================================================================
 # Five computational quantities. Each is given a distinct computational role;
 # no numerical recovery ranking, milestone ordering or temporal constraint is
@@ -226,6 +233,10 @@ def index(name):
 #   M1 beta is a policy-ENACTMENT precision; M2 fast volatility is the volatility
 #   of a behaviourally MAINTAINED (preferred) context (count ~ phi(m)); M3 policy
 #   value is likelihood-routed (no ungated habit term), so pi_s=0 flattens D.
+# The functions M_j (channel_means) and phi instantiate commitments M1-M3; they are
+# NOT claimed to be uniquely forced by active inference in general. Only their
+# structural zero set (which zeroing silences which channel) is used to derive the
+# graph, so any observation model sharing that zero set yields the same chain.
 # The critical edge pi_m -> pi_vfast follows because the maintained-context series
 # that identifies fast volatility exists only under preference-driven dwelling.
 
@@ -354,7 +365,7 @@ def derive_edges_from_generative_model(base=(1.0,) * 5, eps=1e-6):
 
 
 # =============================================================================
-# 2. IDENTIFIABILITY — Stage 1a: zeroing-based dependency recovery
+# 2. IDENTIFIABILITY - Stage 1a: zeroing-based dependency recovery
 # =============================================================================
 # Method: zeroing-based identifiability. Each quantity is probed by asking
 # whether its likelihood remains informative after selectively zeroing
@@ -426,7 +437,7 @@ def zeroing_dependency_matrix(eps=1e-9):
 
 
 # =============================================================================
-# 3. TOPOLOGY — Stage 1b: transitive reduction + unique topological order
+# 3. TOPOLOGY - Stage 1b: transitive reduction + unique topological order
 # =============================================================================
 # A DAG has a unique topological ordering iff that ordering is a total order,
 # i.e. the transitive reduction is a Hamiltonian path. We verify uniqueness
@@ -469,7 +480,7 @@ def derived_order():
 
 
 # =============================================================================
-# 4. RECOVERY — Stage 2a: the information-limited recovery law
+# 4. RECOVERY - Stage 2a: the information-limited recovery law
 # =============================================================================
 # Each quantity k has a recovery state r_k(t) in [0, 1]. The recovery law is:
 #   1. information-limited with multiplicative availability
@@ -572,7 +583,7 @@ def order_from_times(times):
 
 
 # =============================================================================
-# 5. THEOREM — Stage 2b: comparison theorem + robustness
+# 5. THEOREM - Stage 2b: comparison theorem + robustness
 # =============================================================================
 
 def no_crossings(S, tol=1e-9):
@@ -851,7 +862,7 @@ def figure1_dag(reach, order, G, path):
                       mutation_scale=16, lw=1.6, color="#333333",
                       shrinkA=22, shrinkB=22, zorder=2))
     axB.set_xlim(-0.6, len(order) - 0.4); axB.set_ylim(-1, 1)
-    axB.set_title("b  Prerequisite DAG — unique topological order",
+    axB.set_title("b  Prerequisite DAG - unique topological order",
                   loc="left", fontsize=10, fontweight="bold")
     fig.tight_layout(); _finish(fig, path)
 
@@ -906,12 +917,12 @@ def figure3_onset(path):
 def figure4_competing(grid_res, indep_admitted, common_res, saito_res, path):
     """Two-tier model-space audit figure (revised layout).
 
-    TOP row  — the three competing accounts side by side on the two properties
+    TOP row  - the three competing accounts side by side on the two properties
                that discriminate them: uniqueness of the admitted order (a) and
                milestone dissociation (b). Independent-rate fails uniqueness;
                common-severity fails dissociation; only the Saito Loop passes
                both, so 'parameter-independent single order' is the headline.
-    BOTTOM row — 729 pre-declared parameter combinations map to one and the same
+    BOTTOM row - 729 pre-declared parameter combinations map to one and the same
                order: the number 729 is shown as ROBUSTNESS evidence, not as the
                claim itself.
     """
@@ -999,7 +1010,7 @@ def figure4_competing(grid_res, indep_admitted, common_res, saito_res, path):
 
 
 # =============================================================================
-# 8. DRIVER — run everything and print a verification report
+# 8. DRIVER - run everything and print a verification report
 # =============================================================================
 def theorem1_irreducibility():
     """Milestone-side SELECTION check for Theorem 1. The COUNT of five is derived
@@ -1057,7 +1068,7 @@ def _to_jsonable(value):
 def main(fig_dir="."):
     report = {}
     print("=" * 70)
-    print("SAITO LOOP — deductive reproduction (single file)")
+    print("SAITO LOOP - deductive reproduction (single file)")
     print("=" * 70)
 
     # Stage 0 - DERIVE the edges from the explicit Poisson likelihood (nothing
