@@ -2,7 +2,29 @@
 
 All notable changes to `saito_loop.py` are documented here.
 
-## v2.0.1 — Documentation alignment (behaviour identical to v2.0.0)
+## v2.0.2 - Documentation alignment (behaviour identical to v2.0.1)
+
+No change to computation, logic, function names, or results; the
+machine-readable `verification_report.json` is byte-identical to v2.0.1
+(md5 c3fd79607f4f355aca8c3d86e1035943).
+
+### Changed
+- Rewrote the opening NOTE so it no longer states that the prerequisite edges are
+  "supplied to the code as the support of the generative gating". Clarified that
+  `EXPECTED_EDGES_FOR_AUDIT` is retained **solely as a named audit target**, while the
+  edges are reconstructed in Stage 0 (`derive_edges_from_generative_model`) from the
+  joint Poisson likelihood via the mean-Jacobian zero-column test on `channel_means()`;
+  the audit only checks that the reconstructed edges match the named target. This
+  removes a wording inconsistency a reviewer could read as "the edges are entered by hand".
+- Documented that the observation functions themselves are **modelling commitments, not
+  necessities**: added a note beside `channel_means()` stating that `M_j` and `phi`
+  instantiate commitments M1–M3, are not claimed to be uniquely forced by active
+  inference in general, and that only their structural zero set (which zeroing silences
+  which channel) is used to derive the graph, so any observation model sharing that zero
+  set yields the same chain. Mirrors the new Methods "Scope" paragraph and Supplementary
+  Note 7.
+
+## v2.0.1 - Documentation alignment (behaviour identical to v2.0.0)
 
 No change to computation, logic, function names, or results; the
 machine-readable `verification_report.json` is byte-identical to v2.0.0.
@@ -17,7 +39,7 @@ machine-readable `verification_report.json` is byte-identical to v2.0.0.
   `=> milestone-side selection of five`. This removes wording in the previous
   docstring that described the check as a formal minimality "proof".
 
-## v2.0.0 — Corrected analysis (supersedes v1.0.0)
+## v2.0.0 - Corrected analysis (supersedes v1.0.0)
 
 **v1.0.0 is superseded and should not be used to reproduce the published results.**
 
@@ -42,5 +64,5 @@ machine-readable `verification_report.json` is byte-identical to v2.0.0.
 ### Changed
 - Verdict reports separate, regime-scoped checks instead of one aggregate pass.
 
-## v1.0.0 — Initial release (deprecated)
+## v1.0.0 - Initial release (deprecated)
 Superseded by v2.0.0.
