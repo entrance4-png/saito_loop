@@ -1,104 +1,110 @@
-# recovery-order-theory
+# saito_loop
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21351889.svg)](https://doi.org/10.5281/zenodo.21351889)
+Verification code for
 
-Numerical verification code for
-
-> **Recovery order in adaptive systems is set by dependency structure**
+> **The Saito Loop, a computational theory of hierarchical recovery in catatonia**
 > Hiroki Saito (2026)
 
-This repository contains the single, self-contained script that **validates** (it does not
-prove) the analytical results of the paper, and regenerates every figure in it.
+Preprint: `<medRxiv DOI>` · Archive: [10.5281/zenodo.21387507](https://doi.org/10.5281/zenodo.21387507) (v2.0.2, the version used in the paper)
 
-The proofs live in the paper (Methods, Theorems A, B and 1-3, Proposition A.3). The numbers
-here confirm that concrete minimal models behave exactly as those theorems require.
+This repository contains one self-contained script that **checks** (it does not prove)
+the analytical results of the paper and regenerates its figures.
+
+The proofs live in the paper (Methods, Theorems 1–3). The code confirms that a concrete
+minimal model behaves exactly as those theorems require.
 
 ---
 
 ## Quick start
 
-```
-git clone https://github.com/entrance4-png/recovery-order-theory.git
-cd recovery-order-theory
+```bash
+git clone https://github.com/entrance4-png/saito_loop.git
+cd saito_loop
 pip install -r requirements.txt
-python recovery_order_verification.py figures/
+python saito_loop.py            # report + figures in the current directory
+python saito_loop.py ./out      # figures written to ./out
 ```
 
-Runtime: roughly 30-180 s depending on the machine. The script prints a progress marker
-(`[1/8]` to `[8/8]`) for each stage, and ends with a single pass/fail line:
+Python >= 3.9. Only `numpy`, `networkx` and `matplotlib` are required. No network access
+and no data files: every result is deterministic.
+
+The run ends with a single pass/fail line:
 
 ```
-OVERALL: all analytical claims of Theorems A and B reproduced = True
+OVERALL: Part A deductions = True; Part B sole passer = Saito = True; Part C bounded partitions verified = True
 ```
-
-Only `numpy` and `matplotlib` are required. No network access, no data files, no seeds to set:
-every result is deterministic.
 
 ---
 
 ## What is checked
 
+The script has three parts.
+
+**Part A — two-stage deduction, robustness, figures**
+
 | Claim in the paper | Check |
 | --- | --- |
-| **Theorem A**. Fisher information factorizes through the dependency graph, `I_k = c_k · Π_{j ∈ anc(k)} r_j` | closed form vs Monte-Carlo (variance of the score) vs the product, over a random grid of availability levels; and the zero-pattern of the Fisher field vs the graph |
-| **Theorem B1**. posterior precision accumulates Fisher information, `dP_k/dt = I_k` | exact conjugate precision addition vs the accumulation ODE |
-| **Theorem B2/B3**. the recovery law `dr_k/dt = c'_k · A_k · (1 - r_k)` is derived, not assumed | integrating the Fisher-first pipeline through the derived link vs the companion law |
-| **Theorem 1(a)**. onset precedence is **unconditional** | 120 random rate vectors, including strongly increasing ones |
-| **Theorem 1(b)**. milestone precedence holds when rates do not increase along edges (`c_k ≤ c_j`) | 108 samples with non-increasing rates vs 108 with increasing rates |
-| **Sharpness**. the rate condition cannot be dropped | the counterexample (`r0 = 0.5`, `c_j = 1`, `c_k = 100`) and the reversal boundary |
-| **Proposition A.3**. the gate enters only through its **support** | the same graph under the product gate and the min gate (a different t-norm with the same support) |
-| **Theorem 2(a)**. soundness: every realized order is a linear extension | chain (243-point pre-declared grid) and branch |
-| **Theorem 2(b)**. completeness: every linear extension is realized | 30 random DAGs; rates decaying along a target extension σ |
+| **Theorem 2**. the prerequisite edges are derived, not assumed | the edges are reconstructed from the joint Poisson likelihood by the mean-Jacobian zero-column test, without the hand-written edge list |
+| the chain is the only topological order | `distinct orderings : 1 of 120` |
+| **Theorem 1**. exactly five roles are milestone-identifiable | every pair-merge loses a separation; refinement beyond five is unidentifiable |
+| the milestone order follows under uniform onset | no crossings in the recovery dynamics |
+| robustness | a pre-declared 729-point grid over nuisance parameters |
+| **Theorem 3**. non-uniform onset permits only a restricted subset | `admitted orderings : 8 of 120`; πv_slow never first |
+| the rate condition is necessary | reversal outside the gating-dominated regime is confirmed, with the boundary located |
 
-## Figures
+**Part B — dynamical audit of four (P,S) families** against three prespecified signatures
+(canonical order, dissociation, directionality). Only `saito_prerequisite` passes all three.
 
-`recovery_order_verification.py <outdir>` writes the paper's figures to `<outdir>`:
+**Part C — bounded classification**: the one-edit neighbourhood N₁(M) and the Boolean
+(P,S) space, both partitioned exhaustively. `universal_uniqueness_claimed: False`.
 
-| File | In the paper |
-| --- | --- |
-| `Figure1_Factorization.png` | Fig. 1 |
-| `Figure2_RecoveryLaw.png` | Fig. 2 |
-| `Figure3_Ordering.png` | Fig. 3 |
-| `FigureS1_Saturation.png` | Supplementary Fig. 1 |
-| `FigureS2_Counterexample.png` | Supplementary Fig. 2 |
-| `FigureS3_Motor.png` | Supplementary Fig. 3 |
-| `FigureS4_Curriculum.png` | Supplementary Fig. 4 |
-| `derivation_verification_report.json` | machine-readable summary |
+---
 
-## Reproducibility
-
-Every random draw goes through `numpy.random.default_rng` with a fixed seed, and the
-ancestor sets are sorted, so results are **bit-reproducible across machines and across
-`PYTHONHASHSEED` values**. The expected output is:
+## Expected output
 
 ```
-Monte-Carlo == closed-form        : max rel err 2.49%
-support(I_k) == prerequisite graph: True
-distinct orderings                : 1 of 120
-non-increasing rates              : 0/108 violations
-increasing rates                  : 102/108 violations
-onset precedence                  : 0/120 violations
-reversal boundary                 : r0=0.0:1.64 ... r0=0.7:1.22
-product gate / min gate           : 0/200, 0/200 violations; same admissible set
-completeness                      : 30/30 targets realized
+[Stage 0] derived edges     : pi_s->beta, beta->pi_m, pi_m->pi_vfast, pi_vfast->pi_vslow
+          DECISIVE beta=0  -> I_joint(pi_m)=0 (non-identifiable; no leak)
+[Robustness] 729 points, distinct orderings : 1 of 120
+[Competing]  independent-rate: 93 distinct orderings
+             common-severity : spread = 0.000 (no dissociation)
+             Saito Loop      : spread = 3.540 (dissociations)
+[Non-uniform onset] admitted orderings : 8 of 120; pi_vslow never first : True
+
+family,grid,canonical,dissociation,directional,all3,distinct_orders
+independent_rate,729,7,729,0,0,120
+common_severity,729,0,0,0,0,1
+saito_prerequisite,729,729,729,729,729,1
+hybrid,729,729,729,0,0,1
 ```
 
-## Note on what the code does *not* do
+Figures written: `Figure1_DAG.png` (Fig. 1), `Figure2_Recovery.png` (Fig. 2),
+`Figure3_Onset.png` (Fig. 3), `Figure4_Competing.png` (Fig. 4), plus
+`verification_report.json` (machine-readable summary).
 
-The dependency graph is an **input**, not an output. The ancestor sets are supplied as the
-premise of Theorem A; the checks confirm that the Fisher information has the *derived*
-support and magnitude. They do **not** discover the edges by search. Identifying the graph
-from a system's geometry is the paper's central open problem.
+---
+
+## What the code does *not* do
+
+The prerequisite edges are reconstructed from the likelihood, but the *likelihood
+architecture itself* instantiates the modelling commitments M1–M3. Those functional forms
+are commitments, not mathematical necessities of active inference. Uniqueness of the graph
+is conditional on the class 𝔐\* of observation models sharing the same structural zero set.
+
+The code does not discover the graph by search, and it is a consistency check, not a proof.
+The deductive conclusions are independent of simulation length, random seed, grid resolution
+and context number.
+
+Uniqueness of the *temporal* order additionally requires the gating-dominated regime
+(no downstream rate exceeds its prerequisite's). Outside it, a descendant can reach
+threshold first; the script locates that boundary. A graph-general characterization
+remains future work. **Universal uniqueness is not claimed.**
+
+---
 
 ## Citation
 
-If you use this code, please cite the paper and the archived release:
-
-> Saito, H. recovery-order-theory: numerical verification for "Recovery order in adaptive
-> systems is set by dependency structure". *Zenodo* <https://doi.org/10.5281/zenodo.21351889> (2026).
-
-The concept DOI `10.5281/zenodo.21351889` always resolves to the latest version. The current
-release is v1.0.1 (`10.5281/zenodo.21405028`).
+If you use this code, please cite the paper and the archived release. See `CITATION.cff`.
 
 ## License
 
