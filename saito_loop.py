@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-saito_loop_desktop_full.py
+saito_loop.py
 ================================================================================
-The Saito Loop - ONE self-contained desktop file. No project imports.
+The Saito Loop - ONE self-contained file. No project imports.
 
 Everything the paper needs is inlined here:
   PART A  identifiability -> DAG -> unique order (Thm 2); information-limited
@@ -16,12 +16,11 @@ Everything the paper needs is inlined here:
           prespecified signatures.
   PART C  formal bounded classification: one-edit N1(M) and Boolean (P,S).
 
-External libraries (desktop only): numpy, networkx, matplotlib.
-This file does NOT run in Pythonista; for iOS use saito_loop_pythonista.py.
+External libraries: numpy, networkx, matplotlib.
 
 Run:
-    python saito_loop_desktop_full.py            # report + figures here
-    python saito_loop_desktop_full.py ./out      # figures written to ./out
+    python saito_loop.py            # report + figures here
+    python saito_loop.py ./out      # figures written to ./out
 ================================================================================
 """
 from __future__ import annotations
