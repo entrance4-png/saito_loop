@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: >-
-  saito_loop: verification code for "The Saito Loop, a computational theory of
-  hierarchical recovery in catatonia"
+  recovery-order-theory: numerical verification for "Recovery order in adaptive
+  systems is set by dependency structure"
 message: If you use this software, please cite both the software and the paper.
 type: software
 authors:
@@ -13,20 +13,19 @@ authors:
       Neuropsychiatry, Graduate School of Medicine, Nippon Medical School,
       Tokyo, Japan
 license: MIT
-version: 2.0.2
-date-released: "2026-07-16"
-repository-code: "https://github.com/entrance4-png/saito_loop"
-doi: "10.5281/zenodo.21387507"
+version: 1.0.1
+date-released: "2026-07-17"
+repository-code: "https://github.com/entrance4-png/recovery-order-theory"
+doi: "10.5281/zenodo.21351889"
 keywords:
-  - catatonia
   - recovery order
-  - active inference
-  - structural identifiability
+  - dependency graph
+  - linear extensions
   - Fisher information
+  - identifiability
 preferred-citation:
   type: article
-  title: >-
-    The Saito Loop, a computational theory of hierarchical recovery in catatonia
+  title: Recovery order in adaptive systems is set by dependency structure
   authors:
     - family-names: Saito
       given-names: Hiroki
