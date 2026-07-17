@@ -1,31 +1,32 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite both the software and the paper."
-title: "saito_loop: a Python package for the Saito Loop"
-version: 1.0.0
-date-released: 2026-07-13
-license: MIT
+title: >-
+  saito_loop: verification code for "The Saito Loop, a computational theory of
+  hierarchical recovery in catatonia"
+message: If you use this software, please cite both the software and the paper.
 type: software
 authors:
   - family-names: Saito
     given-names: Hiroki
-    affiliation: "Nippon Medical School; Onda-daini Hospital"
-    orcid: "https://orcid.org/0000-0002-4964-8559"  
+    orcid: "https://orcid.org/0000-0002-4964-8559"
+    affiliation: >-
+      Onda-Daini Hospital, Matsudo-shi, Chiba, Japan; Department of
+      Neuropsychiatry, Graduate School of Medicine, Nippon Medical School,
+      Tokyo, Japan
+license: MIT
+version: 2.0.2
+date-released: "2026-07-16"
 repository-code: "https://github.com/entrance4-png/saito_loop"
-abstract: >-
-  Reproduces every result and figure of "The Saito Loop: A Deductive Theory of
-  Hierarchical Recovery in Catatonia": the prerequisite dependency graph, its
-  unique topological ordering, the recovery trajectories and milestones, the
-  729-point robustness grid, the competing-model comparison, and the
-  machine-readable verification report.
+doi: "10.5281/zenodo.21387507"
 keywords:
   - catatonia
-  - computational psychiatry
+  - recovery order
   - active inference
-  - free-energy principle
-  - identifiability
+  - structural identifiability
+  - Fisher information
 preferred-citation:
   type: article
-  title: "The Saito Loop: A Deductive Theory of Hierarchical Recovery in Catatonia"
+  title: >-
+    The Saito Loop, a computational theory of hierarchical recovery in catatonia
   authors:
     - family-names: Saito
       given-names: Hiroki
