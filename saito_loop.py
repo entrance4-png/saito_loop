@@ -2,7 +2,7 @@
 """
 saito_loop.py
 ================================================================================
-The Saito Loop - ONE self-contained file. No project imports.
+The Saito Loop - ONE self-contained desktop file. No project imports.
 
 Everything the paper needs is inlined here:
   PART A  identifiability -> DAG -> unique order (Thm 2); information-limited
@@ -16,7 +16,8 @@ Everything the paper needs is inlined here:
           prespecified signatures.
   PART C  formal bounded classification: one-edit N1(M) and Boolean (P,S).
 
-External libraries: numpy, networkx, matplotlib.
+External libraries (desktop only): numpy, networkx, matplotlib.
+This file does NOT run in Pythonista; for iOS use saito_loop_pythonista.py.
 
 Run:
     python saito_loop.py            # report + figures here
@@ -889,7 +890,7 @@ def figure2_recovery(path):
     fig.tight_layout(); _finish(fig, path)
 
 
-def figure3_onset(path):
+def figure4_onset(path):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.2, 3.8), sharey=True)
     theta = 0.5
     rates = {q: 1.0 for q in QUANTITIES}
@@ -913,7 +914,7 @@ def figure3_onset(path):
     fig.tight_layout(); _finish(fig, path)
 
 
-def figure4_competing(grid_res, indep_admitted, common_res, saito_res, path):
+def figure3_competing(grid_res, indep_admitted, common_res, saito_res, path):
     """Two-tier model-space audit figure (revised layout).
 
     TOP row  - the three competing accounts side by side on the two properties
@@ -1199,10 +1200,10 @@ def main(fig_dir="."):
     print("\n[Figures] writing to", fig_dir)
     figure1_dag(reach, order, G, f"{fig_dir}/Figure1_DAG.png")
     figure2_recovery(f"{fig_dir}/Figure2_Recovery.png")
-    figure3_onset(f"{fig_dir}/Figure3_Onset.png")
-    figure4_competing(grid, indep, common, saito_d,
-                      f"{fig_dir}/Figure4_Competing.png")
-    print("  wrote Figure1_DAG.png .. Figure4_Competing.png")
+    figure3_competing(grid, indep, common, saito_d,
+                      f"{fig_dir}/Figure3_Competing.png")
+    figure4_onset(f"{fig_dir}/Figure4_Onset.png")
+    print("  wrote Figure1_DAG.png .. Figure4_Onset.png")
 
     # Verdict - reported as SEPARATE, regime-scoped checks (not one aggregate).
     theorem1_irreducibility_pass = bool(irr["irreducible"])
@@ -1510,7 +1511,7 @@ def show_saved_figures(fig_dir="."):
         print("Not in a notebook; PNGs are in", os.path.abspath(fig_dir))
         return
     for name in ("Figure1_DAG.png", "Figure2_Recovery.png",
-                 "Figure3_Onset.png", "Figure4_Competing.png"):
+                 "Figure3_Competing.png", "Figure4_Onset.png"):
         p = os.path.join(fig_dir, name)
         if os.path.exists(p):
             display(Image(filename=p))
