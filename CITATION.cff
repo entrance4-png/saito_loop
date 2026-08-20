@@ -13,8 +13,8 @@ authors:
       Neuropsychiatry, Graduate School of Medicine, Nippon Medical School,
       Tokyo, Japan
 license: MIT
-version: 2.0.2
-date-released: "2026-07-16"
+version: 2.1.1
+date-released: "2026-08-20"
 repository-code: "https://github.com/entrance4-png/saito_loop"
 url: "https://doi.org/10.5281/zenodo.21332457"
 doi: "10.5281/zenodo.21332457"
