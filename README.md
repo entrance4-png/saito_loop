@@ -5,7 +5,7 @@ Verification code for
 > **The Saito Loop, a computational theory of hierarchical recovery in catatonia**
 > Hiroki Saito (2026)
 
-Preprint: `<medRxiv DOI>` · Archive: [10.5281/zenodo.21387507](https://doi.org/10.5281/zenodo.21387507) (v2.0.2, the version used in the paper)
+Preprint: [osf.io/preprints/psyarxiv/de6bu](https://osf.io/preprints/psyarxiv/de6bu) · Archive (concept DOI, always the latest version): [10.5281/zenodo.21332457](https://doi.org/10.5281/zenodo.21332457)
 
 This repository contains one self-contained script that **checks** (it does not prove)
 the analytical results of the paper and regenerates its figures.
